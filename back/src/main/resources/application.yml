@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/carrot?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: adcap
-    password: adcap0902!
+    url: jdbc:mysql://3.34.158.104:3306/carrot?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: sehyun
+    password: 0000
   jpa:
     open-in-view: true
     hibernate:
