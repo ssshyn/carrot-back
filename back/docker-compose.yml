@@ -3,7 +3,7 @@ version: '3.2'
 services:
   carrot-db:
       container_name: carrot_db
-      image: mysql/mysql-server:5.7
+      image: sehyunkim/mysql:v5.7
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: carrot
@@ -21,6 +21,7 @@ services:
         - carrot-network
   carrot-api:
     container_name: carrot_api
+    image: sehyunkim/carrot-api:v0.5
     restart: on-failure
     build:
       context: ./
