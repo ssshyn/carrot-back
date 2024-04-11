@@ -21,7 +21,7 @@ services:
         - carrot-network
   carrot-api:
     container_name: carrot_api
-    image: sehyunkim/carrot-api:v0.5
+    image: sehyunkim/carrot-api:v0.6
     restart: on-failure
     build:
       context: ./
