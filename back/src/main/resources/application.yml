@@ -1,15 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://3.34.158.104:3306/carrot?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: sehyun
-    password: 0000
+    url: jdbc:mysql://localhost:3306/carrot
+    username: "sehyun"
+    password: "0000"
   jpa:
     open-in-view: true
     hibernate:
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        use-new-id-generator-mappings: false
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#        use-new-id-generator-mappings: false
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
+  security:
+    user:
+      name: user
+      password: 0000
+server:
+  port: 8081
