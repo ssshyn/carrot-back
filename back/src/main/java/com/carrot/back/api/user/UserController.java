@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/word")
+@RequestMapping("/user")
 @Tag(name = "회원 api")
 public class UserController {
     private final UserUseCase userUseCase;

@@ -15,7 +15,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
   security:
     user:
-      name: user
-      password: 0000
+      name: "user"
+      password: "0000"
 server:
   port: 8081
