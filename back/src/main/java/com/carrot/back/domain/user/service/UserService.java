@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserUseCase{
     private final PasswordEncoder passwordEncoder;
     private final UserDataProvider userDataProvider;
+//    private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
     @Override
     public UserCreated create(UserCreateRequest userCreateRequest) {

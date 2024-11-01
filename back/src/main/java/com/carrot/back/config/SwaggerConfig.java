@@ -5,7 +5,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.OAuthFlow;
 import io.swagger.v3.oas.models.security.OAuthFlows;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,22 +16,19 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI(){
         SecurityScheme apiKey = new SecurityScheme()
-                .type(SecurityScheme.Type.HTTP)
+                .type(SecurityScheme.Type.OAUTH2)
                 .in(SecurityScheme.In.HEADER)
                 .name(HttpHeaders.AUTHORIZATION)
                 .scheme("bearer")
                 .bearerFormat("JWT")
-//                .flows(
-//                        new OAuthFlows()
-//                                .password(
-//                                        new OAuthFlow()
-//                                                .authorizationUrl("/api/oauth2/authorize")
-//                                                .tokenUrl("/api/oauth2/token")
-//                                )
-//                );
-        ;
-
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList("Bearer Token");
+                .flows(
+                        new OAuthFlows()
+                                .password(
+                                        new OAuthFlow()
+                                                .authorizationUrl("/oauth2/authorize")
+                                                .tokenUrl("/oauth2/token")
+                                )
+                );
 
         final Info info = new Info()
                 .title("carrot api")
@@ -41,7 +37,6 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes(HttpHeaders.AUTHORIZATION, apiKey))
-                .addSecurityItem(securityRequirement)
                 .info(info);
     }
 }

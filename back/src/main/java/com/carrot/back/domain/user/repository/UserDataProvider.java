@@ -20,6 +20,10 @@ public class UserDataProvider {
         return userRepository.findById(id);
     }
 
+    public Optional<User> findByUserId(String userId) {
+        return userRepository.findByUserId(userId);
+    }
+
     public Optional<User> create(User user) {
         return Optional.of(userRepository.save(user));
     }
