@@ -23,4 +23,8 @@ public class GoodsDataProvider {
     public Optional<Goods> create(Goods goods) {
         return Optional.of(goodsRepository.save(goods));
     }
+
+    public Goods update(Goods goods) {
+        return goodsRepository.save(goods);
+    }
 }

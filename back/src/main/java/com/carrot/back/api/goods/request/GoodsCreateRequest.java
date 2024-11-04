@@ -18,6 +18,6 @@ public class GoodsCreateRequest {
     private String title;
     @Schema(description = "내용")
     private String description;
-    @Schema(description = "상품명")
+    @Schema(description = "비용")
     private BigDecimal price;
 }

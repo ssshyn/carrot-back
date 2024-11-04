@@ -1,6 +1,7 @@
 package com.carrot.back.api.goods;
 
 import com.carrot.back.api.goods.request.GoodsCreateRequest;
+import com.carrot.back.api.goods.request.GoodsStatusRequest;
 import com.carrot.back.api.goods.response.GoodsCreated;
 import com.carrot.back.api.goods.response.GoodsResponse;
 import com.carrot.back.domain.goods.service.GoodsUseCase;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +40,18 @@ public class GoodsController {
     @PostMapping
     public ResponseEntity<GoodsCreated> create(@RequestBody GoodsCreateRequest createRequest) {
         return ResponseEntity.ok(goodsUseCase.create(createRequest));
+    }
+
+    @Operation(summary = "상품 수정")
+    @PutMapping("/{id}")
+    public ResponseEntity<GoodsResponse> update(@PathVariable(name = "id") Long id,
+                                                @RequestBody GoodsCreateRequest createRequest) throws BadRequestException {
+        return ResponseEntity.ok(goodsUseCase.update(id, createRequest));
+    }
+
+    @Operation(summary = "거래 상태 변경")
+    @PutMapping("/status")
+    public ResponseEntity<GoodsResponse> updateStatus(@RequestBody GoodsStatusRequest goodsStatusRequest) {
+        return ResponseEntity.ok(goodsUseCase.updateStatus(goodsStatusRequest));
     }
 }
