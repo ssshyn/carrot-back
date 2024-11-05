@@ -1,5 +1,6 @@
 package com.carrot.back.domain.user.entity;
 
+import com.carrot.back.domain.likes.entity.Likes;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,6 +49,9 @@ public class User implements UserDetails {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    @OneToMany(mappedBy = "user")
+    private List<Likes> likes = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -54,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return userId;
     }
 
     @Override

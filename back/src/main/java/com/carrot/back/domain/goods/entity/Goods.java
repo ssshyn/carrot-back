@@ -2,12 +2,14 @@ package com.carrot.back.domain.goods.entity;
 
 import com.carrot.back.core.entity.BaseEntity;
 import com.carrot.back.domain.goods.enumeration.TradeStatus;
+import com.carrot.back.domain.likes.entity.Likes;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,6 @@ import java.math.BigDecimal;
 @Entity
 @Builder
 @DynamicUpdate
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "goods")
 public class Goods extends BaseEntity {
     @Id
@@ -33,5 +34,9 @@ public class Goods extends BaseEntity {
     private BigDecimal price;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TradeStatus tradeStatus;
+
+    @OneToMany(mappedBy = "goods")
+    private List<Likes> likes = new ArrayList<>();
 }

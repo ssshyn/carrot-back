@@ -139,6 +139,7 @@ public class SecurityConfig{
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/webjars/**").permitAll()
                         .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth ->
                         oauth
