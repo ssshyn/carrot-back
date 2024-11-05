@@ -18,4 +18,6 @@ public interface GoodsUseCase {
     GoodsResponse update(Long id, GoodsCreateRequest createRequest) throws BadRequestException;
 
     GoodsResponse updateStatus(GoodsStatusRequest goodsStatusRequest);
+
+    Long like(Long id) throws BadRequestException;
 }

@@ -54,4 +54,10 @@ public class GoodsController {
     public ResponseEntity<GoodsResponse> updateStatus(@RequestBody GoodsStatusRequest goodsStatusRequest) {
         return ResponseEntity.ok(goodsUseCase.updateStatus(goodsStatusRequest));
     }
+
+    @Operation(summary = "찜하기")
+    @PutMapping("/like")
+    public ResponseEntity<Long> like(@RequestParam(name = "goodsId") Long goodsId) throws BadRequestException {
+        return ResponseEntity.ok(goodsUseCase.like(goodsId));
+    }
 }

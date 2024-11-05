@@ -4,16 +4,20 @@ import com.carrot.back.api.goods.request.GoodsCreateRequest;
 import com.carrot.back.api.goods.request.GoodsStatusRequest;
 import com.carrot.back.api.goods.response.GoodsCreated;
 import com.carrot.back.api.goods.response.GoodsResponse;
+import com.carrot.back.core.util.SessionUtil;
 import com.carrot.back.domain.goods.entity.Goods;
 import com.carrot.back.domain.goods.enumeration.TradeStatus;
 import com.carrot.back.domain.goods.repository.GoodsDataProvider;
+import com.carrot.back.domain.likes.entity.Likes;
+import com.carrot.back.domain.likes.repository.LikesDataProvider;
+import com.carrot.back.domain.user.entity.User;
+import com.carrot.back.domain.user.repository.UserDataProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.MethodNotAllowedException;
-import org.springframework.web.server.NotAcceptableStatusException;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +28,17 @@ import java.util.Optional;
 @Transactional
 public class GoodsService implements GoodsUseCase{
     private final GoodsDataProvider goodsDataProvider;
+    private final LikesDataProvider likesDataProvider;
+    private final UserDataProvider userDataProvider;
 
     @Override
     public List<GoodsResponse> findAll() {
         List<Goods> goodsList = goodsDataProvider.findAll();
+        goodsList.forEach(
+                goods -> {
+//                    likesDataProvider.
+                }
+        );
         return goodsList.stream().map(GoodsMapper::toGoodsResponse).toList();
     }
 
@@ -71,5 +82,29 @@ public class GoodsService implements GoodsUseCase{
         goods.setTradeStatus(goodsStatusRequest.getTradeStatus());
 
         return GoodsMapper.toGoodsResponse(goodsDataProvider.update(goods));
+    }
+
+    @Override
+    public Long like(Long id) throws BadRequestException {
+        String userId = SessionUtil.getSessionId();
+        User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요"));
+        Goods goods = goodsDataProvider.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        if(Objects.equals(goods.getCreatedBy(), userId)) {
+            throw new BadRequestException("작성자는 찜할 수 없어용");
+        }
+
+        Optional<Likes> likesOptional = likesDataProvider.findByUserIdAndGoodsId(user.getId(), goods.getId());
+
+        if (likesOptional.isPresent()) {
+            likesDataProvider.delete(likesOptional.get());
+        } else {
+            likesDataProvider.create(Likes.builder()
+                            .goods(goods)
+                            .user(user)
+                    .build());
+        }
+
+        return goods.getId();
     }
 }

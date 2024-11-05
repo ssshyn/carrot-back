@@ -10,7 +10,7 @@ import java.util.Optional;
 public class GoodsMapper {
 
     public static GoodsResponse toGoodsResponse(Goods goods) {
-        return GoodsResponse.builder()
+        GoodsResponse result = GoodsResponse.builder()
                 .id(goods.getId())
                 .title(goods.getTitle())
                 .description(goods.getDescription())

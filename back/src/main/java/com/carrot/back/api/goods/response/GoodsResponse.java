@@ -27,4 +27,6 @@ public class GoodsResponse {
     private TradeStatus tradeStatus;
     @Schema(description = "TradeStatus Value")
     private String tradeStatusValue;
+    @Schema(description = "찜")
+    private boolean likes;
 }
