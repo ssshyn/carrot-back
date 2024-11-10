@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -76,10 +77,23 @@ public class GoodsService implements GoodsUseCase{
     }
 
     @Override
-    public GoodsResponse updateStatus(GoodsStatusRequest goodsStatusRequest) {
+    public GoodsResponse updateStatus(GoodsStatusRequest goodsStatusRequest) throws Exception {
         Goods goods = goodsDataProvider.findById(goodsStatusRequest.getId()).orElseThrow(EntityNotFoundException::new);
 
         goods.setTradeStatus(goodsStatusRequest.getTradeStatus());
+
+        if(goods.getTradeStatus().equals(TradeStatus.CONFIRM)) {
+            //구매자 정보 조회
+            User buyer = userDataProvider.findByUserId(StringUtils.trimAllWhitespace(goodsStatusRequest.getBuyerId()))
+                    .orElseThrow(EntityNotFoundException::new);
+            goods.setBuyer(buyer);
+        }
+
+        if(goods.getTradeStatus().equals(TradeStatus.COMPLETED)) {
+            if(goods.getBuyer() == null) {
+                throw new Exception("구매자가 있어야 구매 확정이 가능합니다.");
+            }
+        }
 
         return GoodsMapper.toGoodsResponse(goodsDataProvider.update(goods));
     }
@@ -106,5 +120,14 @@ public class GoodsService implements GoodsUseCase{
         }
 
         return goods.getId();
+    }
+
+    @Override
+    public List<GoodsResponse> buyHistory() {
+        String userId = SessionUtil.getSessionId();
+        User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요"));
+
+        List<Goods> buyHistoryList = goodsDataProvider.findByBuyHistory(user);
+        return buyHistoryList.stream().map(GoodsMapper::toGoodsResponse).toList();
     }
 }

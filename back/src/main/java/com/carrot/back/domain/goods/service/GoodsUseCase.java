@@ -17,7 +17,9 @@ public interface GoodsUseCase {
 
     GoodsResponse update(Long id, GoodsCreateRequest createRequest) throws BadRequestException;
 
-    GoodsResponse updateStatus(GoodsStatusRequest goodsStatusRequest);
+    GoodsResponse updateStatus(GoodsStatusRequest goodsStatusRequest) throws Exception;
 
     Long like(Long id) throws BadRequestException;
+
+    List<GoodsResponse> buyHistory();
 }

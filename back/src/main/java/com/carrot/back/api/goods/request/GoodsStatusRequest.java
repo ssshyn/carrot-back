@@ -17,4 +17,6 @@ public class GoodsStatusRequest {
     private Long id;
     @Schema(description = "거래 상태")
     private TradeStatus tradeStatus;
+    @Schema(description = "구매자 id")
+    private String buyerId;
 }

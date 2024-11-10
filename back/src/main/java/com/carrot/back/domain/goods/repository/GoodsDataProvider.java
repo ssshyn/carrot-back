@@ -1,6 +1,7 @@
 package com.carrot.back.domain.goods.repository;
 
 import com.carrot.back.domain.goods.entity.Goods;
+import com.carrot.back.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,5 +27,9 @@ public class GoodsDataProvider {
 
     public Goods update(Goods goods) {
         return goodsRepository.save(goods);
+    }
+
+    public List<Goods> findByBuyHistory(User user) {
+        return goodsRepository.findByBuyer(user);
     }
 }

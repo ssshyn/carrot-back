@@ -51,7 +51,7 @@ public class GoodsController {
 
     @Operation(summary = "거래 상태 변경")
     @PutMapping("/status")
-    public ResponseEntity<GoodsResponse> updateStatus(@RequestBody GoodsStatusRequest goodsStatusRequest) {
+    public ResponseEntity<GoodsResponse> updateStatus(@RequestBody GoodsStatusRequest goodsStatusRequest) throws Exception {
         return ResponseEntity.ok(goodsUseCase.updateStatus(goodsStatusRequest));
     }
 

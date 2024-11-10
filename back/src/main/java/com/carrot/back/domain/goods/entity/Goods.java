@@ -3,6 +3,7 @@ package com.carrot.back.domain.goods.entity;
 import com.carrot.back.core.entity.BaseEntity;
 import com.carrot.back.domain.goods.enumeration.TradeStatus;
 import com.carrot.back.domain.likes.entity.Likes;
+import com.carrot.back.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -36,6 +37,9 @@ public class Goods extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TradeStatus tradeStatus;
+
+    @OneToOne
+    private User buyer;
 
     @OneToMany(mappedBy = "goods")
     private List<Likes> likes = new ArrayList<>();
