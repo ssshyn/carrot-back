@@ -60,4 +60,10 @@ public class GoodsController {
     public ResponseEntity<Long> like(@RequestParam(name = "goodsId") Long goodsId) throws BadRequestException {
         return ResponseEntity.ok(goodsUseCase.like(goodsId));
     }
+
+    @Operation(summary = "찜 목록")
+    @GetMapping("/like")
+    public ResponseEntity<List<GoodsResponse>> getLikeList() {
+        return ResponseEntity.ok(goodsUseCase.getLikeList());
+    }
 }

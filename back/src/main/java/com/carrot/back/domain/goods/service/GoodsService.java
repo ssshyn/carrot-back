@@ -123,6 +123,15 @@ public class GoodsService implements GoodsUseCase{
     }
 
     @Override
+    public List<GoodsResponse> getLikeList() {
+        String userId = SessionUtil.getSessionId();
+        User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요"));
+
+        List<Likes> likesList = likesDataProvider.findByUserId(user.getId());
+        return likesList.stream().map(x -> GoodsMapper.toGoodsResponse(x.getGoods())).toList();
+    }
+
+    @Override
     public List<GoodsResponse> buyHistory() {
         String userId = SessionUtil.getSessionId();
         User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요"));

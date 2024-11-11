@@ -31,4 +31,8 @@ public class LikesDataProvider {
     public Optional<Likes> findByUserIdAndGoodsId(Long userId, Long goodsId) {
         return likesRepository.findByUserIdAndGoodsId(userId, goodsId);
     }
+
+    public List<Likes> findByUserId(Long userId) {
+        return likesRepository.findByUserId(userId);
+    }
 }
