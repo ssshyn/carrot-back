@@ -18,6 +18,8 @@ public class UserCreateRequest {
     private String password;
     @Schema(description = "성명")
     private String userName;
+    @Schema(description = "닉네임")
+    private String nickname;
     @Schema(description = "주소")
     private String userAddress;
 }

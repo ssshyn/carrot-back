@@ -10,10 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "로그인 요청 model")
-public class LoginRequest {
-    @Schema(description = "아이디")
-    private String id;
-    @Schema(description = "비밀번호")
-    private String password;
+@Schema(description = "회원 닉네임 요청 model")
+public class UserUpdateRequest {
+    @Schema(description = "닉네임")
+    private String nickname;
 }

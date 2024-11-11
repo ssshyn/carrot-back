@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
+    private String nickname;
+
     @Column
     private String userAddress;
 

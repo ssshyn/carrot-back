@@ -2,6 +2,7 @@ package com.carrot.back.api.user;
 
 import com.carrot.back.api.goods.response.GoodsResponse;
 import com.carrot.back.api.user.request.UserCreateRequest;
+import com.carrot.back.api.user.request.UserUpdateRequest;
 import com.carrot.back.api.user.response.UserCreated;
 import com.carrot.back.domain.goods.service.GoodsUseCase;
 import com.carrot.back.domain.user.service.UserUseCase;
@@ -41,4 +42,11 @@ public class UserController {
     @Operation(summary = "회원 판매 이력 조회")
     @GetMapping("/sale/history")
     public ResponseEntity<List<GoodsResponse>> saleHistory() { return ResponseEntity.ok(goodsUseCase.saleHistory()); }
+
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "회원 정보 수정")
+    @PutMapping("/update")
+    public ResponseEntity<UserCreated> update(@RequestBody UserUpdateRequest userUpdateRequest) {
+        return ResponseEntity.ok(userUseCase.update(userUpdateRequest));
+    }
 }

@@ -1,11 +1,14 @@
 package com.carrot.back.domain.user.service;
 
 import com.carrot.back.api.user.request.UserCreateRequest;
+import com.carrot.back.api.user.request.UserUpdateRequest;
 import com.carrot.back.api.user.response.UserCreated;
+import com.carrot.back.core.util.SessionUtil;
 import com.carrot.back.domain.user.entity.User;
 import com.carrot.back.domain.user.repository.UserDataProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +29,14 @@ public class UserService implements UserUseCase{
                 .build();
 
         return UserMapper.toUserCreated(userDataProvider.create(user));
+    }
+
+    @Override
+    public UserCreated update(UserUpdateRequest userUpdateRequest) {
+        String userId = SessionUtil.getSessionId();
+        User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요."));
+
+        user.setNickname(userUpdateRequest.getNickname());
+        return UserMapper.toUserCreated(userDataProvider.update(user));
     }
 }
