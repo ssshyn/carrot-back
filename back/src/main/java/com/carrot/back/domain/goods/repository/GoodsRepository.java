@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GoodsRepository extends JpaRepository<Goods, Long> {
-    public List<Goods> findByBuyer(User user);
+    List<Goods> findByBuyer(User user);
+    List<Goods> findByCreatedBy(String userId);
 }

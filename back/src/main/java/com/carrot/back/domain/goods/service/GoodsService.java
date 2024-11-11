@@ -130,4 +130,13 @@ public class GoodsService implements GoodsUseCase{
         List<Goods> buyHistoryList = goodsDataProvider.findByBuyHistory(user);
         return buyHistoryList.stream().map(GoodsMapper::toGoodsResponse).toList();
     }
+
+    @Override
+    public List<GoodsResponse> saleHistory() {
+        String userId = SessionUtil.getSessionId();
+        User user = userDataProvider.findByUserId(userId).orElseThrow(() -> new UsernameNotFoundException("로그인 해주세요."));
+
+        List<Goods> saleHistoryList = goodsDataProvider.findBySaleHistory(user);
+        return saleHistoryList.stream().map(GoodsMapper::toGoodsResponse).toList();
+    }
 }

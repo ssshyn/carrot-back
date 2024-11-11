@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +36,9 @@ public class UserController {
     public ResponseEntity<List<GoodsResponse>> buyHistory() {
         return ResponseEntity.ok(goodsUseCase.buyHistory());
     }
+
+    @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
+    @Operation(summary = "회원 판매 이력 조회")
+    @GetMapping("/sale/history")
+    public ResponseEntity<List<GoodsResponse>> saleHistory() { return ResponseEntity.ok(goodsUseCase.saleHistory()); }
 }

@@ -32,4 +32,8 @@ public class GoodsDataProvider {
     public List<Goods> findByBuyHistory(User user) {
         return goodsRepository.findByBuyer(user);
     }
+
+    public List<Goods> findBySaleHistory(User user) {
+        return goodsRepository.findByCreatedBy(user.getUserId());
+    }
 }

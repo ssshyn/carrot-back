@@ -22,4 +22,6 @@ public interface GoodsUseCase {
     Long like(Long id) throws BadRequestException;
 
     List<GoodsResponse> buyHistory();
+
+    List<GoodsResponse> saleHistory();
 }
