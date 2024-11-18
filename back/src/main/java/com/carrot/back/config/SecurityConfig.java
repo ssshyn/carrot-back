@@ -140,6 +140,7 @@ public class SecurityConfig{
                         .requestMatchers("/webjars/**").permitAll()
                         .requestMatchers("/swagger-resources/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/test/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth ->
                         oauth
