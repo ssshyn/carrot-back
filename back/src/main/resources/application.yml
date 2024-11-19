@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/carrot
+    url: jdbc:mysql://10.0.0.76:3306/carrot
     username: "sehyun"
     password: "0000"
   jpa:
