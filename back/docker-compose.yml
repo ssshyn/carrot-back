@@ -1,41 +1,49 @@
-version: '3.2'
-
 services:
-  carrot-db:
-      container_name: carrot_db
-      image: sehyunkim/mysql:v5.7
-      restart: unless-stopped
-      environment:
-        MYSQL_DATABASE: carrot
-        MYSQL_ROOT_HOST: '%'
-        MYSQL_ROOT_PASSWORD: 1234
-        TZ: 'Asia/Seoul'
-      ports:
-        - "3306:3306"
-      volumes:
-        - ./mysql/conf.d:/etc/mysql/conf.d
-      command:
-        - "mysqld"
-        - "--character-set-server=utf8mb4"
-      networks:
-        - carrot-network
-  carrot-api:
+  spring:
     container_name: carrot_api
-    image: sehyunkim/carrot-api:v0.6
-    restart: on-failure
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    # environment:
-    #   SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/carrot?useSSL=false&allowPublicKeyRetrieval=true
-    #   SPRING_DATASOURCE_USERNAME: "root"
-    #   SPRING_DATASOURCE_PASSWORD: "1234"
-    depends_on:
-      - carrot-db
-    networks:
-      - carrot-network
-networks:
-  carrot-network:
-    driver: bridge
+    dockerfile: Dockerfile
+  ports:
+    - 8090:8080
+  volumes:
+    - C:/workspace/jenkins/workspace/carrot-api/back/build/libs:/deploy
+#version: '3.2'
+#
+#services:
+#  carrot-db:
+#      container_name: carrot_db
+#      image: sehyunkim/mysql:v5.7
+#      restart: unless-stopped
+#      environment:
+#        MYSQL_DATABASE: carrot
+#        MYSQL_ROOT_HOST: '%'
+#        MYSQL_ROOT_PASSWORD: 1234
+#        TZ: 'Asia/Seoul'
+#      ports:
+#        - "3306:3306"
+#      volumes:
+#        - ./mysql/conf.d:/etc/mysql/conf.d
+#      command:
+#        - "mysqld"
+#        - "--character-set-server=utf8mb4"
+#      networks:
+#        - carrot-network
+#  carrot-api:
+#    container_name: carrot_api
+#    image: sehyunkim/carrot-api:v0.6
+#    restart: on-failure
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    # environment:
+#    #   SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/carrot?useSSL=false&allowPublicKeyRetrieval=true
+#    #   SPRING_DATASOURCE_USERNAME: "root"
+#    #   SPRING_DATASOURCE_PASSWORD: "1234"
+#    depends_on:
+#      - carrot-db
+#    networks:
+#      - carrot-network
+#networks:
+#  carrot-network:
+#    driver: bridge
